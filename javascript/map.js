@@ -33,7 +33,7 @@ var entityMap = {
 
 function initialize() {
 
-  var defaultLatLng = new google.maps.LatLng(32.078043, 34.774177); // Add the coordinates
+  var defaultLatLng = new google.maps.LatLng(0.1, 0.1); // Add the coordinates
 
   markerImage = {
     url: 'images/blue_marker.png',
@@ -84,7 +84,13 @@ function onPositionUpdate(position) {
 
 function onPositionError(err) {
   // try fallback location provider ipinfo.io or generate random location
-  $.getJSON("http://ipinfo.io", onFallbackLocationProviderResponse, useRandomLocation);
+  // $.getJSON("http://ipinfo.io", onFallbackLocationProviderResponse, useRandomLocation);
+  onFirstPosition({
+    "coords": {
+      latitude: parseFloat(0.1),
+      longitude: parseFloat(0.1)
+    }
+  });
 }
 
 function onFallbackLocationProviderResponse(ipinfo) {
@@ -227,9 +233,9 @@ function displayMessageOnMap(msg, olat, olong, sessid, icostr, expir, pokenick) 
   var expiration = expir;
   var pName = '';
   if(typeof pokenick === 'undefined'){
-    pName = " <i>just appeared! </i></b><br>lat: " + olat + " / long: " + olong;
+  var pName = " <i>just appeared! </i></b><br>lat: " + olat + " / long: " + olong;
   } else {
-    pName = "<b>" + pokenick + " </b><i> just appeared! </i></b><br>lat: " + olat + " / long: " + olong;
+    var pName = "<b>" + pokenick + "</b><i> just appeared! </i></b><br>lat: " + olat + " / long: " + olong;
   }
   // console.log(pName);
   // @ro: just checking the output
